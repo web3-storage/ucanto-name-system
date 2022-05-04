@@ -101,15 +101,14 @@ export async function start(
  * Run a server
  */
 export async function main() {
-  const argv = await yargs(hideBin(process.argv)).argv;
+  const argv = await yargs(hideBin(process.argv)).env("UCANTO_NAME").argv;
   console.log({ argv });
   const { stop, urls, nameService } = await start(undefined, {
     control: {
       port: argv.controlPort ? Number(argv.controlPort) : 0,
     },
     data: {
-      port: argv.dataPort ? Number(argv.dataPort) : 
-        process.env.PORT ? Number(process.env.PORT) : 0,
+      port: argv.dataPort ? Number(argv.dataPort) : 0,
     },
   });
   function handleExit(signal: string) {
