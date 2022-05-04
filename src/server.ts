@@ -108,7 +108,8 @@ export async function main() {
       port: argv.controlPort ? Number(argv.controlPort) : 0,
     },
     data: {
-      port: argv.dataPort ? Number(argv.dataPort) : 0,
+      port: argv.dataPort ? Number(argv.dataPort) : 
+        process.env.PORT ? Number(process.env.PORT) : 0,
     },
   });
   function handleExit(signal: string) {
