@@ -27,9 +27,15 @@ export async function HttpNameResolver(
   router.get("/", getIndex);
   router.get(/\/(did:[^/]+)/, await GetDidResolution(nameService));
   const app = express().use(router);
+
+  const proxyLogLevel = process.env.NODE_ENV === "test" ? "warn" : "debug";
   app.use(
     "/ipfs",
-    createProxyMiddleware({ target: GATEWAY_HOST, changeOrigin: true, logLevel: 'warn' })
+    createProxyMiddleware({
+      target: GATEWAY_HOST,
+      changeOrigin: true,
+      logLevel: proxyLogLevel,
+    })
   );
   return app;
 }
